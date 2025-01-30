@@ -13,7 +13,7 @@ int main()
 
     SDL_Window *Window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
     SDL_Surface *Surface = SDL_GetWindowSurface(Window);
-    bool Running = true;
+
     SDL_Event Event;
     SDL_Rect __ERASE_RECT__ = (SDL_Rect){0, 0, WIDTH, HEIGHT};
 
@@ -21,9 +21,9 @@ int main()
     Paddle rightPaddle = {WIDTH - 25, (HEIGHT / 2) - PADDLE_HEIGHT / 2};
     Circle Ball = {WIDTH / 2, HEIGHT / 2, 25};
 
-    while (Running)
+    while (true)
     {
-        Running = handleEvents(Event, &leftPaddle, &rightPaddle);
+        if (!handleEvents(Event, &leftPaddle, &rightPaddle)) break;
         handleMotion(&leftPaddle);
         handleMotion(&rightPaddle);
         SDL_FillRect(Surface, &__ERASE_RECT__, BLACK);

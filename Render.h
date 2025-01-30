@@ -9,7 +9,6 @@ void renderPaddles(SDL_Surface *Surface, Paddle LeftPaddle, Paddle RightPaddle)
 
 void renderCircle(SDL_Surface *Surface, Circle Circle)
 {
-    return;
     for (int i = 0; i < 365; i++)
     {
         double angleInRads = i * (3.1414 / 180);
