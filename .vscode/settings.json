@@ -2,5 +2,6 @@
     "files.associations": {
         "consts.h": "c",
         "render.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

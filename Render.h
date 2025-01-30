@@ -20,49 +20,11 @@ void renderCircle(SDL_Surface *S, Circle C)
     }
 }
 
-void renderNumber(SDL_Surface *S, int Number){
-    int Numbers[8][4][4] = {
-        {
-            {0, 1, 1, 0},
-            {1, 0, 0, 1},
-            {1, 0, 0, 1},
-            {0, 1, 1, 0}
-        },
-        {
-            {0, 1, 1, 0,},
-            {0, 1, 1, 0,},
-            {0, 1, 1, 0,},
-            {0, 1, 1, 0},
-        },
-        {
-            {1, 1, 1, 0,},
-            {0, 0, 0, 1,},
-            {0, 0, 1, 0,},
-            {1, 1, 1, 1}
-        }
-    };
-
-    int PIXEL_WIDTH = 10;
-    int PIXEL_HEIGHT = 10;
-
-    vec2 c = {200, 300};
-
-    /*
-        Pixels should be drawn at {210, 300} {220, 300}, {200, 310}, {230, 310}
-    
-    
-    */
-
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++){
-            if (*Numbers[i][j] < 1) SDL_FillRect(S, &(SDL_Rect){c.x + (i * PIXEL_WIDTH), c.y + (i* PIXEL_HEIGHT), PIXEL_WIDTH, PIXEL_HEIGHT}, RED);
-            else {
-                printf("Drawing pixel in square: {%d, %d}\n",c.x + (i * PIXEL_WIDTH), c.y + (i* PIXEL_HEIGHT) );
-                SDL_FillRect(S, &(SDL_Rect){c.x + (i * PIXEL_WIDTH), c.y + (i* PIXEL_HEIGHT), PIXEL_WIDTH, PIXEL_HEIGHT}, WHITE);
-
-            }
+void renderNumber(SDL_Surface *S, vec2 Coords, int Number){
+    for (int i = 0; i < sizeof(NUMBERS[Number]) / sizeof(NUMBERS[Number][0]); i++) {
+        for (int j = 0; j < sizeof(NUMBERS[Number][i]) / sizeof(NUMBERS[Number][i][0]); j++){
+            if (NUMBERS[Number][i][j] < 1) continue;
+            SDL_FillRect(S, &(SDL_Rect){Coords.x + (j * TEXT_PIXEL_WIDTH), Coords.y + (i * TEXT_PIXEL_HEIGHT), TEXT_PIXEL_WIDTH, TEXT_PIXEL_HEIGHT}, WHITE);
         }
     }
-
-
 }

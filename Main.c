@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
-
 #include <Movement.h>
 #include <Consts.h>
 #include <Render.h>
@@ -29,9 +28,7 @@ int main()
         handleMotion(&rightPaddle);
         SDL_FillRect(Surface, &__ERASE_RECT__, BLACK);
         renderPaddles(Surface, leftPaddle, rightPaddle);
-        // renderCircle(Surface, Ball);
-
-        renderNumber(Surface, 1);
+        renderCircle(Surface, Ball);
         SDL_UpdateWindowSurface(Window);
         SDL_Delay(10);
     }
