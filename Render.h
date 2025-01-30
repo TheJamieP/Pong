@@ -23,7 +23,7 @@ void renderCircle(SDL_Surface *S, Circle C)
 void renderNumber(SDL_Surface *S, vec2 Coords, int Number){
     for (int i = 0; i < sizeof(NUMBERS[Number]) / sizeof(NUMBERS[Number][0]); i++) {
         for (int j = 0; j < sizeof(NUMBERS[Number][i]) / sizeof(NUMBERS[Number][i][0]); j++){
-            if (NUMBERS[Number][i][j] < 1) continue;
+            if ( !NUMBERS[Number][i][j]) continue;
             SDL_FillRect(S, &(SDL_Rect){Coords.x + (j * TEXT_PIXEL_WIDTH), Coords.y + (i * TEXT_PIXEL_HEIGHT), TEXT_PIXEL_WIDTH, TEXT_PIXEL_HEIGHT}, WHITE);
         }
     }

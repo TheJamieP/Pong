@@ -29,6 +29,7 @@ int main()
         SDL_FillRect(Surface, &__ERASE_RECT__, BLACK);
         renderPaddles(Surface, leftPaddle, rightPaddle);
         renderCircle(Surface, Ball);
+        renderNumber(Surface, (vec2){300, 300}, 3);
         SDL_UpdateWindowSurface(Window);
         SDL_Delay(10);
     }
