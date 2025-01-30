@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "consts.h": "c",
+        "render.h": "c"
+    }
+}
