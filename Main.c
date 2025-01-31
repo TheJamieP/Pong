@@ -19,16 +19,17 @@ int main()
 
     Paddle leftPaddle = {0, (HEIGHT / 2) - PADDLE_HEIGHT / 2};
     Paddle rightPaddle = {WIDTH - 25, (HEIGHT / 2) - PADDLE_HEIGHT / 2};
-    Circle Ball = {WIDTH / 2, HEIGHT / 2, 25};
+    Ball Ball = {{WIDTH/2, HEIGHT/2, 25}, {5,5}};
 
     while (true)
     {
         if (!handleEvents(Event, &leftPaddle, &rightPaddle)) break;
-        handleMotion(&leftPaddle);
-        handleMotion(&rightPaddle);
+        handlePaddleMotion(&leftPaddle);
+        handlePaddleMotion(&rightPaddle);
+        handleBallMotion(&Ball);
         SDL_FillRect(Surface, &__ERASE_RECT__, BLACK);
         renderPaddles(Surface, leftPaddle, rightPaddle);
-        renderCircle(Surface, Ball);
+        renderCircle(Surface, Ball.Body);
         renderNumber(Surface, (vec2){300, 300}, 3);
         SDL_UpdateWindowSurface(Window);
         SDL_Delay(10);

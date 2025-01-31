@@ -26,17 +26,22 @@ typedef struct
 
 typedef struct
 {
-    int x;
-    int y;
-    double radius;
-} Circle;
+    double x;
+    double y;
+} vec2;
+
 
 typedef struct
 {
-    int x;
-    int y;
-} vec2;
+    vec2 Coords;
+    double Radius;
+} Circle;
 
+typedef struct 
+{
+    Circle Body;
+    vec2 Velocity;
+} Ball;
 const int NUMBERS[10][5][5] = {
     // 0
     {{0, 1, 1, 1, 0},

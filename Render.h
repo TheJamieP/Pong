@@ -12,9 +12,9 @@ void renderCircle(SDL_Surface *Surface, Circle Circle)
     for (int i = 0; i < 365; i++)
     {
         double angleInRads = i * (3.1414 / 180);
-        for (int r = 0; r < Circle.radius; r++)
+        for (int r = 0; r < Circle.Radius; r++)
         {
-            SDL_FillRect(Surface, &(SDL_Rect){Circle.x + r * SDL_cos(angleInRads), Circle.y + Circle.radius * SDL_sin(angleInRads) - Circle.radius / 2, 1, 1}, WHITE);
+            SDL_FillRect(Surface, &(SDL_Rect){Circle.Coords.x + r * SDL_cos(angleInRads), Circle.Coords.y + Circle.Radius * SDL_sin(angleInRads) - Circle.Radius / 2, 1, 1}, WHITE);
         }
     }
 }
