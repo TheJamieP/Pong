@@ -3,25 +3,49 @@
 void handlePaddleMotion(Paddle *PaddlePtr)
 {
     double vel = 0;
-    if (PaddlePtr->motion.up) vel -= 10;
-    if (PaddlePtr->motion.down) vel +=10;
+    if (PaddlePtr->motion.up)
+        vel -= 10;
+    if (PaddlePtr->motion.down)
+        vel += 10;
 
-    if (PaddlePtr->y <= 0 && vel < 0) return; 
-    if (PaddlePtr->y + PADDLE_HEIGHT >= HEIGHT && vel > 0 ) return;
+    if (PaddlePtr->y <= 0 && vel < 0)
+        return;
+    if (PaddlePtr->y + PADDLE_HEIGHT >= HEIGHT && vel > 0)
+        return;
 
     PaddlePtr->y += vel;
 }
 
+void checkCollisions(Ball *ballPtr, Paddle *leftPaddlePtr, Paddle *rightPaddlePtr)
+{
+    vec2 *ballCoordsPtr = &ballPtr->Body.Coords;
 
-void handleBallMotion(Ball *ballPtr) {
-    vec2* Coords = &ballPtr->Body.Coords;
-    vec2* Vel = &ballPtr->Velocity;
+    // Boundary checks
 
-    if (Coords->x < 0) Vel->x = abs(Vel->x);
-    if (Coords->x > WIDTH) Vel->x = -1 * abs(Vel->x);
-    if (Coords->y < 0) Vel->y = abs(Vel->y);
-    if (Coords->y > HEIGHT) Vel->y = -1 * abs(Vel->y);
-    
-    Coords->x += Vel->x;
-    Coords->y += Vel->y;
+    if (ballCoordsPtr->x > WIDTH)
+        ballPtr->Velocity.x = -1 * abs(ballPtr->Velocity.x);
+    else if (ballCoordsPtr->x < 0)
+        ballPtr->Velocity.x = abs(ballPtr->Velocity.x);
+
+    if (ballCoordsPtr->y < 0)
+        ballPtr->Velocity.y = abs(ballPtr->Velocity.y);
+    else if (ballCoordsPtr->y > HEIGHT)
+        ballPtr->Velocity.y = -1 * abs(ballPtr->Velocity.y);
+
+    //TODO: please fucking refactor this at some point, its fucking awfully built but i just want to get this out the way.
+    bool ballXCoordEqualsRightPaddle = ballCoordsPtr->x + ballPtr->Body.Radius == rightPaddlePtr->x;
+    bool ballYCoordEqualsRightPaddle = (ballCoordsPtr->y + ballPtr->Body.Radius < rightPaddlePtr->y + PADDLE_HEIGHT && ballCoordsPtr->y - ballPtr->Body.Radius > rightPaddlePtr->y);
+    if (ballXCoordEqualsRightPaddle && ballYCoordEqualsRightPaddle)
+        ballPtr->Velocity.x = -1 * abs(ballPtr->Velocity.x);
+
+    bool ballXCoordEqualsLeftPaddle = ballCoordsPtr->x - ballPtr->Body.Radius == leftPaddlePtr->x;
+    bool ballYCoordEqualsLeftPaddle = (ballCoordsPtr->y + ballPtr->Body.Radius < leftPaddlePtr->y + PADDLE_HEIGHT && ballCoordsPtr->y - ballPtr->Body.Radius > leftPaddlePtr->y);
+
+    if (ballXCoordEqualsLeftPaddle && ballYCoordEqualsLeftPaddle) ballPtr->Velocity.x = abs(ballPtr->Velocity.x);
+}
+
+void handleBallMotion(Ball *ballPtr)
+{
+    ballPtr->Body.Coords.x += ballPtr->Velocity.x;
+    ballPtr->Body.Coords.y += ballPtr->Velocity.y;
 }

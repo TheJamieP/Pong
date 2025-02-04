@@ -3,9 +3,18 @@
 #include <stdbool.h>
 #include <Movement.h>
 #include <Consts.h>
-#include <Render.h>
 #include <Events.h>
+#include <Render.h>
+/*
+TODO: Refactor the god awful collision checking
+TODO: Refactor rendering to allow passing an array of paddles, balls and such.
+TODO: Implement a scoring system.
+TODO: Fucking dreading this: text to display "Game Over" screen. Might be worth implementing a system to draw based on a font file. 
 
+
+
+
+*/
 
 int main()
 {
@@ -26,6 +35,7 @@ int main()
         if (!handleEvents(Event, &leftPaddle, &rightPaddle)) break;
         handlePaddleMotion(&leftPaddle);
         handlePaddleMotion(&rightPaddle);
+        checkCollisions(&Ball, &leftPaddle, &rightPaddle);
         handleBallMotion(&Ball);
         SDL_FillRect(Surface, &__ERASE_RECT__, BLACK);
         renderPaddles(Surface, leftPaddle, rightPaddle);
