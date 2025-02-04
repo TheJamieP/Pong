@@ -42,6 +42,13 @@ typedef struct
     Circle Body;
     vec2 Velocity;
 } Ball;
+
+typedef struct
+{
+    int score;
+    vec2 Coords;
+} ScoreCard;
+
 const int NUMBERS[10][5][5] = {
     // 0
     {{0, 1, 1, 1, 0},
