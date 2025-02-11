@@ -1,7 +1,9 @@
 {
     "files.associations": {
         "consts.h": "c",
-        "render.h": "c"
+        "render.h": "c",
+        "Movement.h": "c",
+        "Events.h": "c",
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

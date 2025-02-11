@@ -58,3 +58,43 @@ bool handleEvents(SDL_Event e, Paddle* leftPaddlePtr, Paddle* rightPaddlePtr){
         }
     return true;
 }
+
+
+void resetBallPosition(Ball *ballptr){
+    ballptr->Body.Coords.x = WIDTH / 2;
+    ballptr->Body.Coords.y = HEIGHT / 2;
+}
+
+void checkBallBoundaryCollisions(Ball *ballPtr){
+    vec2 *ballCoordsPtr = &ballPtr->Body.Coords;
+    if (ballCoordsPtr->x > WIDTH)
+    {
+        ballPtr->Velocity.x = -1 * abs(ballPtr->Velocity.x);
+        resetBallPosition(ballPtr);
+    }
+    
+        else if (ballCoordsPtr->x < 0)
+    {
+        ballPtr->Velocity.x = abs(ballPtr->Velocity.x);
+        resetBallPosition(ballPtr);
+    }
+
+    if (ballCoordsPtr->y < 0)
+        ballPtr->Velocity.y = abs(ballPtr->Velocity.y);
+    else if (ballCoordsPtr->y > HEIGHT)
+        ballPtr->Velocity.y = -1 * abs(ballPtr->Velocity.y);
+}
+
+void checkBallPaddleCollisions(Ball *ballPtr, Paddle *paddlePtr)
+{
+    int radius = ballPtr->Body.Radius;
+    int ballTopY = ballPtr->Body.Coords.y - radius;
+    int ballBottomY = ballPtr->Body.Coords.y + radius;
+    if (paddlePtr->Coords.x > WIDTH / 2){
+        if (!((ballPtr->Body.Coords.x + radius >= paddlePtr->Coords.x) && ((ballBottomY <= paddlePtr->Coords.y + PADDLE_HEIGHT) && (ballTopY >= paddlePtr->Coords.y)))) return;
+        ballPtr->Velocity.x = -1 * abs(ballPtr->Velocity.x);
+        return;
+    }
+    if (!((ballPtr->Body.Coords.x - radius <= paddlePtr->Coords.x + PADDLE_WIDTH) && ((ballBottomY <= paddlePtr->Coords.y + PADDLE_HEIGHT) && (ballTopY >= paddlePtr->Coords.y)))) return;
+    ballPtr->Velocity.x = abs(ballPtr->Velocity.x);
+}

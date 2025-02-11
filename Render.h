@@ -3,8 +3,8 @@
 
 void renderPaddles(SDL_Surface *Surface, Paddle LeftPaddle, Paddle RightPaddle)
 {
-    SDL_FillRect(Surface, &(SDL_Rect){LeftPaddle.x, LeftPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT}, WHITE);
-    SDL_FillRect(Surface, &(SDL_Rect){RightPaddle.x, RightPaddle.y, PADDLE_WIDTH, PADDLE_HEIGHT}, WHITE);
+    SDL_FillRect(Surface, &(SDL_Rect){LeftPaddle.Coords.x, LeftPaddle.Coords.y, PADDLE_WIDTH, PADDLE_HEIGHT}, WHITE);
+    SDL_FillRect(Surface, &(SDL_Rect){RightPaddle.Coords.x, RightPaddle.Coords.y, PADDLE_WIDTH, PADDLE_HEIGHT}, WHITE);
 }
 
 void renderCircle(SDL_Surface *Surface, Circle Circle)

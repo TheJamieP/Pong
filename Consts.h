@@ -13,23 +13,22 @@
 
 typedef struct
 {
-    bool up;
-    bool down;
-} Motion;
-
-typedef struct
-{
-    int x;
-    int y;
-    Motion motion;
-} Paddle;
-
-typedef struct
-{
     double x;
     double y;
 } vec2;
 
+typedef struct
+{
+    bool up;
+    bool down;
+} Motion;
+
+// TODO: Replace x,y with a vec2 of COORDS.
+typedef struct
+{
+    vec2 Coords;
+    Motion motion;
+} Paddle;
 
 typedef struct
 {
@@ -48,6 +47,12 @@ typedef struct
     int score;
     vec2 Coords;
 } ScoreCard;
+
+typedef struct 
+{
+    ScoreCard Score;
+    Paddle Paddle;
+} Player;
 
 const int NUMBERS[10][5][5] = {
     // 0
