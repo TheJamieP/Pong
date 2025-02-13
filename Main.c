@@ -30,17 +30,17 @@ int main()
     Paddle leftPaddle = {0, (HEIGHT / 2) - PADDLE_HEIGHT / 2};
     Paddle rightPaddle = {WIDTH - PADDLE_WIDTH, (HEIGHT / 2) - PADDLE_HEIGHT / 2};
     */
-    Ball Ball = {{WIDTH/2, HEIGHT/2, 25}, {5,5}};
+    Ball Ball = {{WIDTH/2, HEIGHT/2, 16}, {5,5}};
     
 
     Player Players[2] = {
         {
             (ScoreCard){0, (vec2){50, (WIDTH / 2) - 50}},
-            (Paddle){(vec2){0, (HEIGHT / 2) - PADDLE_HEIGHT / 2}}
+            (Paddle){(vec2){0, (HEIGHT / 2) - PADDLE_HEIGHT / 2}, (Motion){false,false}, BLUE}
         },
         {
             (ScoreCard){0, (vec2){50, (WIDTH / 2) + 50}},
-            (Paddle){(vec2){WIDTH - PADDLE_WIDTH, (HEIGHT / 2) - PADDLE_HEIGHT / 2}}
+            (Paddle){(vec2){WIDTH - PADDLE_WIDTH, (HEIGHT / 2) - PADDLE_HEIGHT / 2}, (Motion){false,false},RED}
         }
 
     };
@@ -50,17 +50,14 @@ int main()
         
     
         checkBallBoundaryCollisions(&Ball);
-        checkBallPaddleCollisions(&Ball, &Players[0].Paddle);
-        checkBallPaddleCollisions(&Ball, &Players[1].Paddle);
+        checkBallPaddleCollisions(&Ball, Players);
 
-        handlePaddleMotion(&Players[0].Paddle);
-        handlePaddleMotion(&Players[1].Paddle);
-
+        handlePaddleMotion(Players);
         handleBallMotion(&Ball);
         
         clearScreen(Surface);
         
-        renderPaddles(Surface, Players[0].Paddle, Players[1].Paddle);
+        renderPaddles(Surface, Players);
         renderCircle(Surface, Ball.Body);
         renderNumber(Surface, (vec2){300, 300}, 3);
         

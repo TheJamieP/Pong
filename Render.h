@@ -1,10 +1,12 @@
 #include <SDL2/SDL.h>
 #include <Consts.h>
 
-void renderPaddles(SDL_Surface *Surface, Paddle LeftPaddle, Paddle RightPaddle)
+void renderPaddles(SDL_Surface *Surface, Player Players[2])
 {
-    SDL_FillRect(Surface, &(SDL_Rect){LeftPaddle.Coords.x, LeftPaddle.Coords.y, PADDLE_WIDTH, PADDLE_HEIGHT}, WHITE);
-    SDL_FillRect(Surface, &(SDL_Rect){RightPaddle.Coords.x, RightPaddle.Coords.y, PADDLE_WIDTH, PADDLE_HEIGHT}, WHITE);
+    for (int i = 0; i < 2; i++){
+        Paddle paddle = Players[i].Paddle;
+        SDL_FillRect(Surface, &(SDL_Rect){paddle.Coords.x, paddle.Coords.y, PADDLE_WIDTH, PADDLE_HEIGHT}, paddle.Color);
+    };
 }
 
 void renderCircle(SDL_Surface *Surface, Circle Circle)

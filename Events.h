@@ -79,22 +79,25 @@ void checkBallBoundaryCollisions(Ball *ballPtr){
         resetBallPosition(ballPtr);
     }
 
-    if (ballCoordsPtr->y < 0)
+    if (ballCoordsPtr->y  - ballPtr->Body.Radius< 0)
         ballPtr->Velocity.y = abs(ballPtr->Velocity.y);
-    else if (ballCoordsPtr->y > HEIGHT)
+    else if (ballCoordsPtr->y + ballPtr->Body.Radius > HEIGHT)
         ballPtr->Velocity.y = -1 * abs(ballPtr->Velocity.y);
 }
 
-void checkBallPaddleCollisions(Ball *ballPtr, Paddle *paddlePtr)
+void checkBallPaddleCollisions(Ball *ballPtr, Player Players[2])
 {
-    int radius = ballPtr->Body.Radius;
-    int ballTopY = ballPtr->Body.Coords.y - radius;
-    int ballBottomY = ballPtr->Body.Coords.y + radius;
-    if (paddlePtr->Coords.x > WIDTH / 2){
-        if (!((ballPtr->Body.Coords.x + radius >= paddlePtr->Coords.x) && ((ballBottomY <= paddlePtr->Coords.y + PADDLE_HEIGHT) && (ballTopY >= paddlePtr->Coords.y)))) return;
-        ballPtr->Velocity.x = -1 * abs(ballPtr->Velocity.x);
-        return;
-    }
-    if (!((ballPtr->Body.Coords.x - radius <= paddlePtr->Coords.x + PADDLE_WIDTH) && ((ballBottomY <= paddlePtr->Coords.y + PADDLE_HEIGHT) && (ballTopY >= paddlePtr->Coords.y)))) return;
-    ballPtr->Velocity.x = abs(ballPtr->Velocity.x);
+    for (int i = 0; i < 2; i++){
+        Paddle* paddlePtr = &(Players[i].Paddle);
+        int radius = ballPtr->Body.Radius;
+        int ballTopY = ballPtr->Body.Coords.y - radius;
+        int ballBottomY = ballPtr->Body.Coords.y + radius;
+        if (paddlePtr->Coords.x > WIDTH / 2){
+            if (!((ballPtr->Body.Coords.x + radius >= paddlePtr->Coords.x) && ((ballBottomY <= paddlePtr->Coords.y + PADDLE_HEIGHT) && (ballTopY >= paddlePtr->Coords.y)))) continue;
+            ballPtr->Velocity.x = -1 * abs(ballPtr->Velocity.x);
+            continue;
+        }
+        if (!((ballPtr->Body.Coords.x - radius <= paddlePtr->Coords.x + PADDLE_WIDTH) && ((ballBottomY <= paddlePtr->Coords.y + PADDLE_HEIGHT) && (ballTopY >= paddlePtr->Coords.y)))) continue;
+        ballPtr->Velocity.x = abs(ballPtr->Velocity.x);
+    };
 }

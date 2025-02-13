@@ -10,7 +10,7 @@
 #define WHITE 0xFFFFFFFF
 #define BLACK 0x00000000
 #define RED 0xFFFF0000
-
+#define BLUE 0x0000FFFF
 typedef struct
 {
     double x;
@@ -23,11 +23,11 @@ typedef struct
     bool down;
 } Motion;
 
-// TODO: Replace x,y with a vec2 of COORDS.
 typedef struct
 {
     vec2 Coords;
     Motion motion;
+    int Color;
 } Paddle;
 
 typedef struct
