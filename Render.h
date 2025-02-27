@@ -29,3 +29,9 @@ void renderNumber(SDL_Surface *Surface, vec2 Coords, int Number){
         }
     }
 }
+
+void renderScores(SDL_Surface *Surface, Player Players[2]){
+    for (int i = 0; i<2; i++){
+        renderNumber(Surface, Players[i].Score.Coords, Players[i].Score.score);
+    };
+}

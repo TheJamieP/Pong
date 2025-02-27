@@ -35,11 +35,11 @@ int main()
 
     Player Players[2] = {
         {
-            (ScoreCard){0, (vec2){50, (WIDTH / 2) - 50}},
+            (ScoreCard){0, (vec2){WIDTH / 2 - 100, 50}},
             (Paddle){(vec2){0, (HEIGHT / 2) - PADDLE_HEIGHT / 2}, (Motion){false,false}, BLUE}
         },
         {
-            (ScoreCard){0, (vec2){50, (WIDTH / 2) + 50}},
+            (ScoreCard){0, (vec2){WIDTH / 2 + 100, 50}},
             (Paddle){(vec2){WIDTH - PADDLE_WIDTH, (HEIGHT / 2) - PADDLE_HEIGHT / 2}, (Motion){false,false},RED}
         }
 
@@ -57,9 +57,10 @@ int main()
         
         clearScreen(Surface);
         
+        renderScores(Surface, Players);
         renderPaddles(Surface, Players);
         renderCircle(Surface, Ball.Body);
-        renderNumber(Surface, (vec2){300, 300}, 3);
+
         
         SDL_UpdateWindowSurface(Window);
         SDL_Delay(10);
