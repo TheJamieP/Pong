@@ -11,25 +11,17 @@ TODO: Implement a scoring system.
 TODO: Fucking dreading this: text to display "Game Over" screen. Might be worth implementing a system to draw based on a font file. 
 */
 
-void clearScreen(SDL_Surface *s){
-    SDL_FillRect(s, &(SDL_Rect){0, 0, WIDTH, HEIGHT}, BLACK);
-}
-
-int main()
+void main()
 {
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *Window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
-    SDL_Surface *Surface = SDL_GetWindowSurface(Window);
+    SDL_Renderer * Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Surface *Screen = SDL_GetWindowSurface(Window);
 
     SDL_Event Event;
     SDL_Rect __ERASE_RECT__ = (SDL_Rect){0, 0, WIDTH, HEIGHT};
 
-    /*
-    
-    Paddle leftPaddle = {0, (HEIGHT / 2) - PADDLE_HEIGHT / 2};
-    Paddle rightPaddle = {WIDTH - PADDLE_WIDTH, (HEIGHT / 2) - PADDLE_HEIGHT / 2};
-    */
     Ball Ball = {{WIDTH/2, HEIGHT/2, 16}, {5,5}};
     
 
@@ -44,26 +36,28 @@ int main()
         }
 
     };
-    while (true)
+    while (handleEvents(Event, &Players[0].Paddle, &Players[1].Paddle))
     {
-        if (!handleEvents(Event, &Players[0].Paddle, &Players[1].Paddle)) break;
         
-    
         checkBallBoundaryCollisions(&Ball);
         checkBallPaddleCollisions(&Ball, Players);
 
         handlePaddleMotion(Players);
         handleBallMotion(&Ball);
         
-        clearScreen(Surface);
-        
-        renderScores(Surface, Players);
-        renderPaddles(Surface, Players);
-        renderCircle(Surface, Ball.Body);
+        SDL_SetRenderDrawColor(Renderer, 0, 0, 0, 255);
 
+        SDL_RenderClear(Renderer);
+    
         
-        SDL_UpdateWindowSurface(Window);
+        renderScores(Renderer, Players);
+        renderPaddles(Renderer, Players);
+        renderCircle(Renderer, Ball.Body);
+
+        SDL_RenderPresent(Renderer);
         SDL_Delay(10);
     }
-    return 0;
+
+    SDL_DestroyRenderer(Renderer);
+    SDL_DestroyWindow(Window);
 }
