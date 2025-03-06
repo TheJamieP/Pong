@@ -5,6 +5,10 @@
 #include <Consts.h>
 #include <Events.h>
 #include <Render.h>
+#include <SDL2/SDL_ttf.h>
+
+
+
 /*
 TODO: Refactor rendering to allow passing an array of paddles, balls and such.
 TODO: Implement a scoring system.
@@ -14,11 +18,11 @@ TODO: Fucking dreading this: text to display "Game Over" screen. Might be worth 
 void main()
 {
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
 
     SDL_Window *Window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
     SDL_Renderer * Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
     SDL_Surface *Screen = SDL_GetWindowSurface(Window);
-
     SDL_Event Event;
     SDL_Rect __ERASE_RECT__ = (SDL_Rect){0, 0, WIDTH, HEIGHT};
 
@@ -50,7 +54,7 @@ void main()
         SDL_RenderClear(Renderer);
     
         
-        renderScores(Renderer, Players);
+        renderScores(Renderer, Screen, Players);
         renderPaddles(Renderer, Players);
         renderCircle(Renderer, Ball.Body);
 

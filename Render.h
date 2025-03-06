@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <Consts.h>
 
 void passRectToRender(SDL_Renderer* Renderer, SDL_Rect* Rect, SDL_Color Col){
@@ -30,18 +31,32 @@ void renderCircle(SDL_Renderer* Renderer, Circle Circle)
     }
 }
 
-void renderNumber(SDL_Renderer *Renderer, vec2 Coords, int Number){
-    for (int i = 0; i < sizeof(NUMBERS[Number]) / sizeof(NUMBERS[Number][0]); i++) {
-        for (int j = 0; j < sizeof(NUMBERS[Number][i]) / sizeof(NUMBERS[Number][i][0]); j++){
-            if ( !NUMBERS[Number][i][j]) continue;
-            SDL_Rect Rect = (SDL_Rect){Coords.x + (j * TEXT_PIXEL_WIDTH), Coords.y + (i * TEXT_PIXEL_HEIGHT), TEXT_PIXEL_WIDTH, TEXT_PIXEL_HEIGHT};
-            passRectToRender(Renderer, &Rect, WHITE);
-        }
+void renderText(SDL_Renderer *Renderer, vec2 Coords, char* Text, int Size) {
+    // Load font
+
+    TTF_Font* Font = TTF_OpenFont("Ubuntu-R.ttf", Size);
+    if (!Font) {
+        printf("Failed to load font: %s\n", TTF_GetError());
+        return;
     }
+    SDL_Surface* textSurface = TTF_RenderText_Solid(Font, Text, WHITE);
+
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(Renderer, textSurface);
+    SDL_FreeSurface(textSurface);
+
+    
+    SDL_Rect destRect = {Coords.x, Coords.y, textSurface->w, textSurface->h};
+    SDL_RenderCopy(Renderer, textTexture, NULL, &destRect);
+
+    SDL_DestroyTexture(textTexture);
+    TTF_CloseFont(Font);
 }
 
-void renderScores(SDL_Renderer* Renderer, Player Players[2]){
+
+
+void renderScores(SDL_Renderer* Renderer, SDL_Surface* Surface, Player Players[2]){
     for (int i = 0; i<2; i++){
-        renderNumber(Renderer, Players[i].Score.Coords, Players[i].Score.score);
+        char c = Players[i].Score.score + '0';
+        renderText(Renderer, Players[i].Score.Coords, &c, 72);
     };
 }
