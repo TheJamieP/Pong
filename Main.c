@@ -10,8 +10,6 @@
 
 
 /*
-TODO: Refactor rendering to allow passing an array of paddles, balls and such.
-TODO: Implement a scoring system.
 TODO: Fucking dreading this: text to display "Game Over" screen. Might be worth implementing a system to draw based on a font file. 
 */
 
